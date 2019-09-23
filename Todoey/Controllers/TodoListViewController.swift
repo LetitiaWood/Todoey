@@ -101,7 +101,6 @@ class TodoListViewController: UITableViewController {
                 print("Error decoding item array. \(error)")
             }
         }
-        
     }
 }
 
