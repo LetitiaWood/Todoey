@@ -8,22 +8,21 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class CategoryTableViewController: SwipeTableViewController {
 
-    lazy var realm:Realm = {
+    lazy var realm : Realm = {
         return try! Realm()
     }()
-//    let realm = try! Realm()
+    
     var categories : Results<Category>?
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadCategories()
+        tableView.separatorStyle = .none
         
     }
 
@@ -52,6 +51,13 @@ class CategoryTableViewController: SwipeTableViewController {
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = super.tableView(tableView, cellForRowAt: indexPath)
             cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+            
+//            let colorValue = UIColor.randomFlat().hexValue()
+            cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colorValue ?? "007AFF")
+            
+//            cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colorValue)
+            
+            
             return cell
         }
     
@@ -95,6 +101,7 @@ class CategoryTableViewController: SwipeTableViewController {
         //            what will happen when uialert is clicked
             let newCategory = Category()
             newCategory.name = textField.text!
+            newCategory.colorValue = UIColor.randomFlat().hexValue()
             self.save(category: newCategory)
         }
         
